@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGODB_URL=${MONGODB_URL}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - EXTERNAL_API_URL=${EXTERNAL_API_URL}
+    depends_on:
+      - mongodb
+    volumes:
+      - ./:/app
+
+  mongodb:
+    image: mongo:6.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
